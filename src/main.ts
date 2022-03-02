@@ -11,6 +11,7 @@ const CACHE_PATH = [path.join(homedir(), ".rustup", "toolchains")];
 const INSTALL_ARGS = ["--default-toolchain", "none", "-y"];
 
 async function run(): Promise<void> {
+      core.debug("run run run");
   try {
     try {
       await io.which("rustup", true);
@@ -42,6 +43,8 @@ async function run(): Promise<void> {
     const cacheKey = `rustup-${
       process.platform
     }-${version}-${components.replace(" ", "-")}-${targets}`;
+
+    core.debug("Cache stuff...");
 
     try {
       await cache.restoreCache(CACHE_PATH, cacheKey);
