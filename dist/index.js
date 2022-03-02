@@ -73,7 +73,11 @@ function run() {
             let components = core.getInput("components");
             let targets = core.getInput("targets");
             const cacheKey = `rustup-${process.platform}-${version}-${components.replace(" ", "-")}-${targets}`;
-            yield cache.restoreCache(CACHE_PATH, cacheKey);
+            try {
+              yield cache.restoreCache(CACHE_PATH, cacheKey);
+            } catch (error) {
+              core.info(`Could not restore from cache with key ${cacheKey}: ${error}`);
+            }
             let args = [
                 "toolchain",
                 "install",
