@@ -43,7 +43,11 @@ async function run(): Promise<void> {
       process.platform
     }-${version}-${components.replace(" ", "-")}-${targets}`;
 
-    await cache.restoreCache(CACHE_PATH, cacheKey);
+    try {
+      await cache.restoreCache(CACHE_PATH, cacheKey);
+    } catch (error) {
+      core.info(`Could not restore cache with key ${cacheKey}`);
+    }
 
     let args = [
       "toolchain",
